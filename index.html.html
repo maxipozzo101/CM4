@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis Costos Medios Tasadores 25-26 | Grupo 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8102E;
+    --red-dark: #9e0b22;
+    --red-light: #f5d0d6;
+    --black: #111111;
+    --gray-900: #1a1a1a;
+    --gray-700: #333333;
+    --gray-500: #666666;
+    --gray-300: #aaaaaa;
+    --gray-100: #f0f0f0;
+    --gray-50: #f8f8f8;
+    --white: #ffffff;
+    --green: #0d6e3f;
+    --green-light: #d1f0e2;
+    --border: #e2e2e2;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--black);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    border-bottom: 3px solid var(--red);
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo-svg {
+    height: 40px;
+    width: auto;
+  }
+  .header-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--gray-700);
+  }
+  .header-title {
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .header-title span {
+    display: block;
+    color: var(--gray-300);
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    margin-top: 1px;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .header-badge {
+    background: var(--red);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  /* SUBHEADER */
+  .subheader {
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .subheader-left {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .subheader-info {
+    font-size: 12px;
+    color: var(--gray-500);
+    font-weight: 400;
+  }
+  .subheader-info strong {
+    color: var(--black);
+    font-weight: 600;
+  }
+  .selector-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .selector-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-500);
+  }
+  select {
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--black);
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 7px 32px 7px 12px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  select:focus { border-color: var(--red); }
+
+  /* MAIN CONTENT */
+  .main { padding: 28px 40px 40px; }
+
+  /* KPI CARDS TOP */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .kpi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .kpi-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gray-300);
+  }
+  .kpi-card.accent::before { background: var(--red); }
+  .kpi-card.green::before  { background: var(--green); }
+  .kpi-card.fail::before   { background: var(--red); }
+  .kpi-value.red       { color: var(--red); }
+  .kpi-value.green     { color: var(--green); }
+  .kpi-value.kpi-green { color: #1a7c3e; font-weight: 800; }
+  .kpi-value.kpi-red   { color: var(--red); font-weight: 800; }
+  .kpi-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-500);
+    margin-bottom: 10px;
+  }
+  .kpi-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .kpi-value.red { color: var(--red); }
+  .kpi-value.green { color: var(--green); }
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--gray-500);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+  .kpi-sub .tag {
+    display: inline-block;
+    background: var(--gray-100);
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .kpi-sub .tag.green { background: var(--green-light); color: var(--green); }
+  .kpi-sub .tag.red { background: #fde8ec; color: var(--red); }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-500);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::before {
+    content: '';
+    width: 3px;
+    height: 14px;
+    background: var(--red);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* GRID 2 COLS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+  .grid-3 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 28px; }
+
+  /* PANEL */
+  .panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 22px 24px;
+  }
+  .panel-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--black);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .panel-title-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    background: var(--gray-100);
+    padding: 3px 8px;
+    border-radius: 2px;
+    color: var(--gray-500);
+  }
+
+  /* DESVIO CARD - main comparison */
+  .desvio-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 22px 24px;
+    margin-bottom: 28px;
+  }
+  .desvio-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .desvio-main {
+    flex: 0 0 auto;
+  }
+  .desvio-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+  }
+  .desvio-number {
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .desvio-number.red { color: var(--red); }
+  .desvio-number.green { color: var(--green); }
+  .desvio-meta {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-top: 8px;
+  }
+  .desvio-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 10px;
+  }
+  .desvio-status.green { background: var(--green-light); color: var(--green); }
+  .desvio-status.red { background: #fde8ec; color: var(--red); }
+  .desvio-status::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+  .desvio-status.green::before { background: var(--green); }
+  .desvio-status.red::before { background: var(--red); }
+  .desvio-bar-section {
+    flex: 1;
+  }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-row-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-500);
+    width: 100px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .bar-track {
+    flex: 1;
+    background: var(--gray-100);
+    border-radius: 3px;
+    height: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .bar-fill {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+  .bar-val {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--black);
+    width: 80px;
+    flex-shrink: 0;
+    text-align: left;
+  }
+
+  /* LINE CHART */
+  .chart-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+  svg.chart { display: block; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  th {
+    background: var(--gray-900);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 10px 14px;
+    text-align: right;
+  }
+  th:first-child { text-align: left; }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+    color: var(--gray-700);
+    font-weight: 400;
+  }
+  td:first-child { text-align: left; font-weight: 600; color: var(--black); }
+  tr:last-child td { border-bottom: none; }
+  tr.highlight { background: var(--gray-50); }
+  tr.active-row td { background: #fff8f9; }
+  tr.active-row td:first-child { color: var(--red); }
+  .desvio-cell {
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .desvio-cell.green { color: var(--green); }
+  .desvio-cell.red { color: var(--red); }
+
+  /* RANKING */
+  .ranking-list { list-style: none; }
+  .ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .ranking-item:last-child { border-bottom: none; }
+  .rank-num {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--gray-300);
+    width: 22px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .rank-num.top { color: var(--red); }
+  .rank-name {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--black);
+  }
+  .rank-cant {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--black);
+    width: 40px;
+    text-align: right;
+  }
+  .rank-bar-mini {
+    width: 60px;
+    background: var(--gray-100);
+    border-radius: 2px;
+    height: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .rank-bar-fill {
+    height: 100%;
+    background: var(--red);
+    border-radius: 2px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--gray-50);
+    border-top: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--gray-300);
+  }
+  .footer strong { color: var(--gray-500); }
+
+  /* TASADOR META MINI CARDS */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .meta-card {
+    border-radius: 6px;
+    padding: 16px 16px 14px;
+    position: relative;
+    overflow: hidden;
+    border: 1.5px solid transparent;
+    cursor: default;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .meta-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+  .meta-card.ok {
+    background: #f0faf5;
+    border-color: #a8ddc2;
+  }
+  .meta-card.fail {
+    background: #fff4f6;
+    border-color: #f5b8c4;
+  }
+  .meta-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .meta-card.ok::before { background: var(--green); }
+  .meta-card.fail::before { background: var(--red); }
+  .meta-card-name {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+  }
+  .meta-card.ok .meta-card-name { color: var(--green); }
+  .meta-card.fail .meta-card-name { color: var(--red); }
+  .meta-card-desvio {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .meta-card.ok .meta-card-desvio { color: var(--green); }
+  .meta-card.fail .meta-card-desvio { color: var(--red); }
+  .meta-card-meta {
+    font-size: 10px;
+    color: var(--gray-500);
+    margin-top: 5px;
+    font-weight: 500;
+  }
+  .meta-card-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 3px 7px;
+    border-radius: 2px;
+  }
+  .meta-card.ok .meta-card-status { background: #c3edda; color: var(--green); }
+  .meta-card.fail .meta-card-status { background: #fde0e6; color: var(--red); }
+  .meta-card-cm {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-top: 4px;
+  }
+  .meta-summary-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 10px 16px;
+    background: var(--gray-50);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+  }
+  .meta-summary-ok {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .meta-summary-fail {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red);
+  }
+  .meta-summary-label {
+    font-size: 11px;
+    color: var(--gray-500);
+    font-weight: 400;
+  }
+  .meta-summary-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+  }
+
+  /* ── PANEL ACCIONES DE MEJORA ── */
+  .acciones-panel {
+    border: 1.5px solid #C8102E;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(200,16,46,0.10);
+  }
+  .acciones-header {
+    background: #C8102E;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .acciones-header-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .acciones-header-text {
+    flex: 1;
+  }
+  .acciones-header-title {
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+  }
+  .acciones-header-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .acciones-body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .accion-item {
+    padding: 18px 20px;
+    border-right: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background 0.15s;
+  }
+  .accion-item:last-child { border-right: none; }
+  .accion-item:hover { background: #fff8f8; }
+  .accion-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #C8102E;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .accion-icon {
+    font-size: 22px;
+    line-height: 1;
+  }
+  .accion-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.3;
+  }
+  .accion-desc {
+    font-size: 10.5px;
+    color: #666;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  .acciones-footer {
+    padding: 10px 20px;
+    background: #fff8f8;
+    border-top: 1px solid #fde0e5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .acciones-footer-text {
+    font-size: 10px;
+    color: #C8102E;
+    font-weight: 600;
+    font-style: italic;
+  }
+  @media (max-width: 900px) {
+    .acciones-body { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .acciones-body { grid-template-columns: 1fr; }
+  }
+  .standings-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .standings-block {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+    background: #1d4f2e;
+  }
+
+  /* ── Encabezado verde oscuro ── */
+  .prm-title-bar {
+    background: #1d4f2e;
+    padding: 13px 16px 11px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .prm-title-bar h3 {
+    font-size: 14px;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin: 0 0 3px;
+  }
+  .prm-title-bar p {
+    font-size: 9px;
+    color: rgba(255,255,255,0.45);
+    margin: 0;
+    font-weight: 400;
+  }
+
+  /* ── Cabecera de columnas ── */
+  .prm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Sora', sans-serif;
+  }
+  .prm-table thead tr {
+    background: #1d4f2e;
+  }
+  .prm-table thead th {
+    padding: 6px 10px 7px;
+    font-size: 8.5px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    border: none;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .prm-table thead th:nth-child(2) {
+    text-align: left;
+    padding-left: 10px;
+  }
+  /* columna # angosta */
+  .prm-table thead th:first-child { width: 42px; }
+  /* columna nombre flexible */
+  .prm-table thead th:nth-child(2) { min-width: 100px; }
+  /* columna dato principal — más ancha para pesos completos */
+  .prm-table thead th:nth-child(3) { width: 130px; }
+  /* columnas secundarias */
+  .prm-table thead th:nth-child(4),
+  .prm-table thead th:nth-child(5) { width: 66px; }
+
+  /* ── Filas del cuerpo ── */
+  .prm-table tbody tr {
+    background: #ffffff;
+    border-bottom: 1px solid #efefef;
+    height: 34px;
+  }
+  .prm-table tbody tr.row-lib {
+    background: #eafaf1;
+  }
+  .prm-table tbody tr.row-lib:hover { background: #d5f5e3; }
+  .prm-table tbody tr.row-dark {
+    background: #2d2d2d;
+  }
+  .prm-table tbody tr.row-dark:hover { background: #383838; }
+  .prm-table tbody tr.row-dark td { color: #e0e0e0; }
+  .prm-table tbody tr.row-dark td.c-name { color: #ffffff; }
+  .prm-table tbody tr.row-dark .v-pos { color: #4cd68a !important; }
+  .prm-table tbody tr.row-dark .v-neg { color: #ff6b6b !important; }
+  .prm-table tbody tr.row-dark .v-neu { color: #aaaaaa !important; }
+  .prm-table tbody tr:not(.prm-sep-row):not(.row-lib):not(.row-dark):nth-child(even) {
+    background: #f7f7f7;
+  }
+  .prm-table tbody tr:not(.prm-sep-row):not(.row-lib):not(.row-dark):hover {
+    background: #eef7f2;
+  }
+
+  /* ── Celda genérica ── */
+  .prm-table tbody td {
+    padding: 0 10px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #2a2a2a;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    border: none;
+    height: 34px;
+  }
+
+  /* ── Celda # posición ── */
+  .prm-table tbody td.c-pos {
+    width: 42px;
+    padding: 0;
+  }
+  .pos-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+    font-family: 'Sora', sans-serif;
+    letter-spacing: 0;
+  }
+  .pos-badge.p-green  { background: #27ae60; }
+  .pos-badge.p-gray   { background: #b0b0b0; }
+
+  /* ── Celda nombre (alineada izquierda) ── */
+  .prm-table tbody td.c-name {
+    text-align: left;
+    padding: 0 8px 0 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #111;
+    min-width: 100px;
+  }
+  .name-wrap {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .trophy { font-size: 11px; }
+
+  /* ── Celda dato principal (negrita) ── */
+  .prm-table tbody td.c-pts {
+    font-size: 12px;
+    font-weight: 800;
+    color: #111;
+    width: 66px;
+  }
+
+  /* ── Celda dato secundario ── */
+  .prm-table tbody td.c-stat {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: #555;
+    width: 66px;
+  }
+
+  /* ── Colores de valor ── */
+  .v-pos { color: #1e8449 !important; font-weight: 700 !important; }
+  .v-neg { color: #C8102E !important; font-weight: 700 !important; }
+  .v-neu { color: #666    !important; font-weight: 500 !important; }
+
+  /* ── Fila separador entre zonas ── */
+  .prm-sep-row {
+    background: #1d4f2e !important;
+    height: 22px !important;
+    border-bottom: none !important;
+  }
+  .prm-sep-row td {
+    padding: 0 12px !important;
+    font-size: 8px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.15em !important;
+    color: rgba(255,255,255,0.55) !important;
+    text-align: left !important;
+    height: 22px !important;
+    background: #1d4f2e !important;
+  }
+
+  /* ── Leyenda inferior ── */
+  .prm-legend {
+    background: #1d4f2e;
+    padding: 9px 14px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+  }
+  .prm-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+  }
+  .prm-legend-sq {
+    width: 13px; height: 13px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 920px) {
+    .standings-wrapper { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .meta-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .main { padding: 18px 16px 30px; }
+    .subheader { padding: 12px 16px; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .header { padding: 0 16px; }
+    .desvio-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-logo">
+    <!-- La Segunda Seguros Logo (modern style) -->
+    <svg class="logo-svg" viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Shield / Escudo -->
+      <path d="M4 4 L20 4 L20 28 Q12 36 4 28 Z" fill="#C8102E"/>
+      <path d="M4 4 L20 4 L20 14 L4 14 Z" fill="#9e0b22"/>
+      <!-- Text LA SEGUNDA -->
+      <text x="26" y="18" font-family="Sora, sans-serif" font-size="14" font-weight="800" fill="#ffffff" letter-spacing="1">LA SEGUNDA</text>
+      <text x="26" y="32" font-family="Sora, sans-serif" font-size="8.5" font-weight="400" fill="#aaaaaa" letter-spacing="2.5">SEGUROS</text>
+    </svg>
+    <div class="header-divider"></div>
+    <div class="header-title">
+      ANÁLISIS COSTOS MEDIOS TASADORES
+      <span>Período 2025 – 2026</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-badge">Grupo 4</div>
+    <div style="color:var(--gray-300);font-size:11px;font-weight:500;">Líder: <span style="color:var(--white);font-weight:700;">Diego Micolini</span></div>
+  </div>
+</header>
+
+<!-- SUBHEADER / CONTROLS -->
+<div class="subheader">
+  <div class="subheader-left">
+    <div class="subheader-info">
+      <strong>10 Tasadores</strong> en seguimiento
+    </div>
+    <div class="subheader-info">Último período disponible: <strong>Febrero 2026</strong></div>
+    <div class="subheader-info">Área: <strong>Siniestros Automotores</strong></div>
+  </div>
+  <div class="selector-wrapper">
+    <span class="selector-label">Tasador</span>
+    <select id="tasadorSelect" onchange="updateDashboard()">
+      <option value="GRUPO">— GRUPO (Promedio) —</option>
+      <option value="DAVICINO">DAVICINO</option>
+      <option value="FERAZZANI">FERAZZANI</option>
+      <option value="GARCIA">GARCIA</option>
+      <option value="GUGLIALMELLI">GUGLIALMELLI</option>
+      <option value="PEREZ">PEREZ</option>
+      <option value="PERTILE">PERTILE</option>
+      <option value="POZZO">POZZO</option>
+      <option value="RIZZA">RIZZA</option>
+      <option value="ROJAS">ROJAS</option>
+      <option value="SALAS">SALAS</option>
+    </select>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- KPI CARDS / META GRID (toggle by selection) -->
+  <div id="kpiArea"></div>
+
+  <!-- DESVIO PRINCIPAL -->
+  <div class="desvio-card" id="desvioCard">
+    <!-- rendered by JS -->
+  </div>
+
+  <!-- PANEL ACCIONES DE MEJORA (solo visible si tasador fuera de meta) -->
+  <div id="accionesMejora" style="display:none;margin-bottom:20px;"></div>
+  <div class="panel" style="margin-bottom:20px;">
+    <div class="panel-title">
+      Evolución Anual Costo Medio
+      <span class="panel-title-tag" id="chartSubtitle">Grupo</span>
+    </div>
+    <div class="chart-wrap">
+      <svg id="lineChart" class="chart" width="100%" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+  </div>
+
+  <!-- TABLAS DE POSICIONES — estilo Promiedos -->
+  <div class="standings-wrapper">
+
+    <!-- TABLA 1: Por Costo Medio -->
+    <div class="standings-block">
+      <div class="prm-title-bar">
+        <h3>📊 Tabla — Costo Medio</h3>
+        <p>Menor CM = mejor posición · Febrero 2026 · Top 2 clasifican a Libertadores</p>
+      </div>
+      <table class="prm-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tasador</th>
+            <th>CM Feb.</th>
+            <th>vs CESVI</th>
+            <th>Pericias</th>
+          </tr>
+        </thead>
+        <tbody id="standingsCM"></tbody>
+      </table>
+      <div class="prm-legend">
+        <div class="prm-legend-item">
+          <div class="prm-legend-sq" style="background:#27ae60"></div>
+          Copa Libertadores (Top 2)
+        </div>
+        <div class="prm-legend-item">
+          <div class="prm-legend-sq" style="background:#b0b0b0"></div>
+          Sin clasificación
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLA 2: Por cumplimiento de meta -->
+    <div class="standings-block">
+      <div class="prm-title-bar">
+        <h3>🎯 Tabla — Cumplimiento Meta 25-26</h3>
+        <p>Menor diferencia Desvío − Meta = mejor · Top 2 clasifican a Libertadores</p>
+      </div>
+      <table class="prm-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tasador</th>
+            <th>Dif.</th>
+            <th>Desv.</th>
+            <th>Meta</th>
+          </tr>
+        </thead>
+        <tbody id="standingsMeta"></tbody>
+      </table>
+      <div class="prm-legend">
+        <div class="prm-legend-item">
+          <div class="prm-legend-sq" style="background:#27ae60"></div>
+          Copa Libertadores (Top 2)
+        </div>
+        <div class="prm-legend-item">
+          <div class="prm-legend-sq" style="background:#C8102E"></div>
+          Fuera de meta
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <!-- RESUMEN + PROYECCIÓN -->
+  <div class="grid-2" style="margin-bottom:20px;">
+    <div class="panel">
+      <div class="panel-title">Resumen del Grupo — Período Completo</div>
+      <div id="groupSummary"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">
+        Proyección de Cumplimiento Meta
+        <span class="panel-title-tag">Jul 2025 – Jun 2026</span>
+      </div>
+      <div id="proyeccionChart"></div>
+    </div>
+  </div>
+
+  <!-- PERICIAS CHART - al final, menor importancia -->
+  <div class="panel" style="margin-bottom:0;">
+    <div class="panel-title">
+      Cantidad de Pericias por Tasador
+      <span class="panel-title-tag">Asegurados vs. A+T (Aseg. + Terceros)</span>
+    </div>
+    <div class="chart-wrap">
+      <svg id="periciasChart" class="chart" width="100%" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div>La Segunda Seguros — Jefatura de Siniestros — <strong>Grupo 4 Tasadores</strong></div>
+  <div>Datos al <strong>Febrero 2026</strong> · Estadísticas internas</div>
+</footer>
+
+<script>
+const DATA = {
+  meses: ['Julio','Agosto','Sep.','Oct.','Nov.','Dic.','Ene.','Feb.'],
+  tasadores: [
+    { n:'DAVICINO',    vals:[2587685,2385649,2620742,2488622,2630345,2497863,2544358,2525526], cant:206, pctCesvi:0.0767, meta:0.05, infat:495 },
+    { n:'FERAZZANI',   vals:[3195949,2938796,2855621,2726418,2556317,2594156,2498072,2485006], cant:483, pctCesvi:0.0594, meta:0.16, infat:659 },
+    { n:'GARCIA',      vals:[2006451,2032220,1945035,2231661,2268245,2289138,2396642,2457678], cant:166, pctCesvi:0.0477, meta:0.03, infat:404 },
+    { n:'GUGLIALMELLI',vals:[3083280,2293500,2171756,2160923,2140957,2219750,2398883,2591494], cant:156, pctCesvi:0.1048, meta:0.20, infat:379 },
+    { n:'PEREZ',       vals:[2109466,2561931,2496936,2500262,2679398,2898701,2964429,2861669], cant:275, pctCesvi:0.220, meta:0.13, infat:564 },
+    { n:'PERTILE',     vals:[2261642,2101054,1994869,2007678,2080912,2200894,2232784,2319714], cant:337, pctCesvi:-0.011, meta:0.02, infat:734 },
+    { n:'POZZO',       vals:[2307762,2221205,2279533,2210649,2237644,2310834,2302706,2258105], cant:320, pctCesvi:-0.0373, meta:0.04, infat:587 },
+    { n:'RIZZA',       vals:[3330548,3183347,3021101,2953451,2964346,2886125,2783277,2941366], cant:293, pctCesvi:0.2542, meta:0.05, infat:593 },
+    { n:'ROJAS',       vals:[3014963,2518783,2372601,2218361,2497618,2462471,2628910,2656888], cant:337, pctCesvi:0.1327, meta:0.07, infat:551 },
+    { n:'SALAS',       vals:[3027959,2937393,2197407,3193929,3016166,2966967,2919033,2915752], cant:324, pctCesvi:0.243, meta:0.02, infat:639 },
+  ],
+  cesvi:    [2173078,2163182,2208028,2236272,2278418,2301946,2325844,2345570],
+  segunda:  [2464300,2434771,2469922,2506926,2294685,2587530,2618660,2627463],
+  grupo:    [2692570.5,2517387.8,2395560.1,2469195.4,2507194.8,2532689.9,2566909.4,2601319.8],
+};
+
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('es-AR');
+}
+function pct(n, decimals=1) {
+  return (n*100).toFixed(decimals) + '%';
+}
+function getTasadorOrGroup(sel) {
+  if (sel === 'GRUPO') return null;
+  return DATA.tasadores.find(t => t.n === sel);
+}
+
+function updateDashboard() {
+  const sel = document.getElementById('tasadorSelect').value;
+  const t = getTasadorOrGroup(sel);
+  const vals = t ? t.vals : DATA.grupo;
+  const lastVal = vals[7];
+  const cesviFeb = DATA.cesvi[7];
+  const segundaFeb = DATA.segunda[7];
+  const meta = t ? t.meta : (DATA.tasadores.reduce((a,x)=>a+x.meta,0)/DATA.tasadores.length);
+  const pctCesvi = t ? t.pctCesvi : ((lastVal - cesviFeb) / cesviFeb);
+  const isOk = Math.abs(pctCesvi) <= meta;
+  const cant = t ? t.cant : DATA.tasadores.reduce((a,x)=>a+x.cant,0);
+  const infat = t ? t.infat : DATA.tasadores.reduce((a,x)=>a+x.infat,0);
+
+  if (sel === 'GRUPO') {
+    renderMetaCards();
+    document.getElementById('accionesMejora').style.display = 'none';
+  } else {
+    renderKPIs(lastVal, cesviFeb, segundaFeb, meta, pctCesvi, isOk);
+    renderAccionesMejora(sel, isOk, pctCesvi, meta);
+  }
+  renderDesvio(pctCesvi, meta, isOk, lastVal, cesviFeb);
+  renderLineChart(vals, sel);
+  document.getElementById('chartSubtitle').textContent = sel === 'GRUPO' ? 'Promedio Grupo' : sel;
+  renderGroupSummary(cant, infat, sel);
+  renderProyeccion(sel);
+  renderPericiasChart(sel);
+  renderStandings(sel);
+}
+
+function renderMetaCards() {
+  const area = document.getElementById('kpiArea');
+  const cesviFeb = DATA.cesvi[7];
+  const okCount = DATA.tasadores.filter(t => Math.abs(t.pctCesvi) <= t.meta).length;
+  const failCount = DATA.tasadores.length - okCount;
+
+  const summaryBar = `
+    <div class="meta-summary-bar">
+      <span class="meta-summary-label">Estado vs. Meta 25-26 — Febrero 2026</span>
+      <div class="meta-summary-divider"></div>
+      <span class="meta-summary-ok">✔ ${okCount} dentro de meta</span>
+      <div class="meta-summary-divider"></div>
+      <span class="meta-summary-fail">✘ ${failCount} fuera de meta</span>
+      <div class="meta-summary-divider"></div>
+      <span class="meta-summary-label">CM CESVI ref.: <strong style="color:var(--black)">${fmt(cesviFeb)}</strong></span>
+    </div>
+  `;
+
+  const cards = DATA.tasadores.map(t => {
+    const isOk = Math.abs(t.pctCesvi) <= t.meta;
+    const lastCM = t.vals[7];
+    return `
+      <div class="meta-card ${isOk ? 'ok' : 'fail'}">
+        <div class="meta-card-name">${t.n}</div>
+        <div class="meta-card-desvio">${pct(t.pctCesvi, 2)}</div>
+        <div class="meta-card-cm">${fmt(lastCM)}</div>
+        <div class="meta-card-meta">Meta: ${pct(t.meta)} · Pericias: ${t.cant}</div>
+        <div class="meta-card-status">${isOk ? '✔ Dentro' : '✘ Fuera'}</div>
+      </div>
+    `;
+  }).join('');
+
+  area.innerHTML = summaryBar + `<div class="meta-grid">${cards}</div>`;
+}
+
+function renderAccionesMejora(sel, isOk, pctCesvi, meta) {
+  const el = document.getElementById('accionesMejora');
+  if (sel === 'GRUPO') { el.style.display = 'none'; el.innerHTML = ''; return; }
+
+  const desvStr = (pctCesvi >= 0 ? '+' : '') + (pctCesvi * 100).toFixed(1) + '%';
+  const metaStr = (meta * 100).toFixed(0) + '%';
+
+  const ACCIONES = [
+    { icon: '🔩', title: 'Licitaciones de Repuestos',
+      descOk:   'Seguir gestionando licitaciones a 24/48 hs. Esta practica es clave para mantener el costo competitivo y sostener el resultado en el tiempo.',
+      descFail: 'Gestionar licitaciones a 24/48 hs para obtener mejores precios en repuestos originales y garantizar competitividad en el costo de materiales.' },
+    { icon: '🔧', title: 'Repuestos Alternativos',
+      descOk:   'Continuar evaluando repuestos en calidad alternativa certificada. Es una herramienta que contribuye directamente al control del costo medio.',
+      descFail: 'Evaluar y considerar repuestos en calidad alternativa certificada como opcion valida para reducir el costo medio sin comprometer la reparacion.' },
+    { icon: '🏭', title: 'Red de Talleres',
+      descOk:   'Mantener la priorizacion de la red de talleres oficiales de La Segunda. Las tarifas preacordadas son una ventaja competitiva que hay que sostener.',
+      descFail: 'Priorizar la derivacion a talleres de la red oficial de La Segunda, que operan con tarifas preacordadas y menores costos de mano de obra.' },
+    { icon: '📋', title: 'Ajuste de Mano de Obra',
+      descOk:   'Continuar con el control preciso de tiempos, visitas a talleres y auditoria de liquidaciones finales. Esta disciplina es la base de los buenos resultados.',
+      descFail: 'Revisar con precision los tiempos de mano de obra, realizar visitas a talleres, controlar reparaciones en curso y auditar liquidaciones finales.' },
+  ];
+
+  const headerBg    = isOk ? '#1a7c3e' : '#C8102E';
+  const borderColor = isOk ? '#1a7c3e' : '#C8102E';
+  const footerBg    = isOk ? '#f2fbf6' : '#fff8f8';
+  const footerBorder = isOk ? '#c3edda' : '#fde0e5';
+  const footerColor = isOk ? '#1a7c3e' : '#C8102E';
+  const numBg       = isOk ? '#1a7c3e' : '#C8102E';
+  const headerIcon  = isOk ? '🏆' : '⚠️';
+
+  let headerTitle, headerSub, footerMsg;
+  if (isOk) {
+    const margen = ((meta - Math.abs(pctCesvi)) * 100).toFixed(1);
+    headerTitle = 'Excelente trabajo — ' + sel;
+    headerSub   = 'Desvio actual: ' + desvStr + '  |  Meta: ' + metaStr + '  |  Margen disponible: ' + margen + ' pp  —  Dentro de meta. Seguir manteniendo estas practicas.';
+    footerMsg   = 'Mantener estas practicas de forma consistente es lo que genera resultados sostenidos. Muy buen desempeno!';
+  } else {
+    const exceso = ((Math.abs(pctCesvi) - meta) * 100).toFixed(1);
+    headerTitle = 'Acciones de Mejora — ' + sel;
+    headerSub   = 'Desvio actual: ' + desvStr + '  |  Meta: ' + metaStr + '  |  Exceso sobre meta: +' + exceso + ' pp  —  Se requiere accion correctiva.';
+    footerMsg   = 'Aplicar estas acciones de forma combinada puede reducir significativamente el costo medio en los proximos periodos.';
+  }
+
+  const tarjetas = ACCIONES.map(function(a, i) {
+    const desc = isOk ? a.descOk : a.descFail;
+    return '<div class="accion-item">'
+      + '<div style="display:flex;align-items:center;gap:10px;">'
+      + '<span class="accion-num" style="background:' + numBg + ';">' + (i + 1) + '</span>'
+      + '<span class="accion-icon">' + a.icon + '</span>'
+      + '</div>'
+      + '<div class="accion-title">' + a.title + '</div>'
+      + '<div class="accion-desc">' + desc + '</div>'
+      + '</div>';
+  }).join('');
+
+  el.style.display = 'block';
+  el.innerHTML =
+    '<div class="acciones-panel" style="border-color:' + borderColor + ';box-shadow:0 2px 12px rgba(0,0,0,0.10);">'
+    + '<div class="acciones-header" style="background:' + headerBg + ';">'
+    +   '<div class="acciones-header-icon">' + headerIcon + '</div>'
+    +   '<div class="acciones-header-text">'
+    +     '<div class="acciones-header-title">' + headerTitle + '</div>'
+    +     '<div class="acciones-header-sub">' + headerSub + '</div>'
+    +   '</div>'
+    + '</div>'
+    + '<div class="acciones-body">' + tarjetas + '</div>'
+    + '<div class="acciones-footer" style="background:' + footerBg + ';border-top-color:' + footerBorder + ';">'
+    +   '<span style="font-size:14px;">' + (isOk ? '⭐' : '💡') + '</span>'
+    +   '<span class="acciones-footer-text" style="color:' + footerColor + ';">' + footerMsg + '</span>'
+    + '</div>'
+    + '</div>';
+  // ── CUADRO DE PROBABILIDAD ──
+  const tasador = DATA.tasadores.find(function(t) { return t.n === sel; });
+  if (tasador) {
+    const prob = calcProb(tasador);
+    const barColor = prob >= 50 ? '#1a7c3e' : prob >= 30 ? '#e67e22' : prob >= 11 ? '#C8102E' : '#7a0a1c';
+    const etiqueta = prob >= 50 ? 'En camino' : prob >= 30 ? 'En riesgo' : prob >= 11 ? 'Dificil' : 'Muy dificil';
+    const msgColor = prob >= 50 ? '#1a7c3e' : '#C8102E';
+    const msg = prob >= 50
+      ? 'Con la tendencia actual, este tasador tiene buenas chances de cerrar el periodo dentro de meta.'
+      : prob >= 30
+      ? 'La tendencia actual indica dificultades. Se recomienda aplicar las acciones de mejora de forma urgente.'
+      : 'La proyeccion es desfavorable. Es necesaria una intervencion inmediata para revertir la tendencia.';
+
+    const probBox = document.createElement('div');
+    probBox.style.cssText = 'margin-top:12px;border:1px solid #e8e8e8;border-radius:8px;overflow:hidden;background:#fff;';
+    probBox.innerHTML =
+      '<div style="padding:10px 16px;background:#f7f7f7;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;">'
+      + '<div style="display:flex;align-items:center;gap:8px;">'
+      + '<span style="font-size:14px;">🎯</span>'
+      + '<span style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#444;">Proyeccion de Cumplimiento Meta — Jun 2026</span>'
+      + '</div>'
+      + '<span style="font-size:18px;font-weight:800;color:' + msgColor + ';">' + prob + '%</span>'
+      + '</div>'
+      + '<div style="padding:12px 16px;">'
+      + '<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">'
+      + '<div style="flex:1;background:#eeeeee;border-radius:4px;height:20px;overflow:hidden;position:relative;">'
+      + '<div style="position:absolute;top:0;left:0;height:100%;width:' + prob + '%;background:' + barColor + ';border-radius:4px 0 0 4px;transition:width 0.5s ease;"></div>'
+      + '<div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;padding-left:10px;">'
+      + '<span style="font-size:9px;font-weight:700;color:#fff;">' + etiqueta + '</span>'
+      + '</div>'
+      + '</div>'
+      + '</div>'
+      + '<p style="font-size:10px;color:#666;margin:0;line-height:1.5;">' + msg + '</p>'
+      + '</div>';
+
+    el.appendChild(probBox);
+  }
+}
+
+function renderKPIs(lastVal, cesvi, segunda, meta, pctCesvi, isOk) {
+  const area = document.getElementById('kpiArea');
+  const desvColor = isOk ? 'var(--green)' : 'var(--red)';
+  const cards = [
+    {
+      label: 'Costo Medio Tasador',
+      value: fmt(lastVal),
+      sub: 'Febrero 2026',
+      accent: true, green: false
+    },
+    {
+      label: 'CM CESVI',
+      value: fmt(cesvi),
+      sub: 'Febrero 2026',
+      accent: false, green: false
+    },
+    {
+      label: 'Desvío Actual vs CESVI',
+      value: pct(pctCesvi),
+      sub: isOk ? '✔ Dentro de meta' : '✘ Fuera de meta',
+      accent: false, green: isOk, red: !isOk
+    },
+    {
+      label: 'Meta 25-26',
+      value: pct(meta),
+      sub: `Tolerancia máx. de desvío`,
+      accent: false, green: false
+    },
+  ];
+  area.innerHTML = `<div class="kpi-grid">${cards.map((c,i) => `
+    <div class="kpi-card${c.accent?' accent':''}${c.green?' green':''}${c.red?' fail':''}">
+      <div class="kpi-label">${c.label}</div>
+      <div class="kpi-value${i===2?(isOk?' kpi-green':' red'):''}">
+        ${c.value}
+      </div>
+      <div class="kpi-sub">${c.sub}</div>
+    </div>
+  `).join('')}</div>`;
+}
+
+function renderDesvio(pctCesvi, meta, isOk, lastVal, cesviFeb) {
+  const d = document.getElementById('desvioCard');
+  const maxBar = Math.max(lastVal, cesviFeb, DATA.segunda[7]) * 1.05;
+  const barsData = [
+    { label: 'CM Propio', val: lastVal, color: '#C8102E' },
+    { label: 'CM CESVI',  val: cesviFeb, color: '#333333' },
+    { label: 'CM La Segunda', val: DATA.segunda[7], color: '#888888' },
+  ];
+  d.innerHTML = `
+    <div class="section-title">Comparación CM Propio vs. CESVI — Febrero 2026</div>
+    <div class="desvio-inner">
+      <div class="desvio-main">
+        <div class="desvio-label">Desvío CM Propio vs. CESVI</div>
+        <div class="desvio-number ${isOk?'green':'red'}">${pct(pctCesvi, 2)}</div>
+        <div class="desvio-meta">Meta establecida: <strong>${pct(meta)}</strong></div>
+        <div class="desvio-status ${isOk?'green':'red'}">${isOk?'Dentro del rango meta':'Fuera del rango meta'}</div>
+      </div>
+      <div class="desvio-bar-section">
+        ${barsData.map(b => `
+          <div class="bar-row">
+            <div class="bar-row-label">${b.label}</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${(b.val/maxBar*100).toFixed(1)}%;background:${b.color}"></div>
+            </div>
+            <div class="bar-val">${fmt(b.val)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderLineChart(vals, sel) {
+  const svg = document.getElementById('lineChart');
+  const W = 900, H = 200;
+  const pad = { top: 20, right: 20, bottom: 30, left: 60 };
+  const allVals = [...vals, ...DATA.cesvi, ...DATA.segunda];
+  const minV = Math.min(...allVals) * 0.96;
+  const maxV = Math.max(...allVals) * 1.02;
+  const xStep = (W - pad.left - pad.right) / 7;
+  const yScale = v => H - pad.bottom - ((v - minV) / (maxV - minV)) * (H - pad.top - pad.bottom);
+  const xPos = i => pad.left + i * xStep;
+
+  function pathLine(data, clr, dashed=false) {
+    const d = data.map((v,i) => `${i===0?'M':'L'}${xPos(i).toFixed(1)},${yScale(v).toFixed(1)}`).join(' ');
+    return `<path d="${d}" fill="none" stroke="${clr}" stroke-width="${dashed?1.5:2.5}" stroke-dasharray="${dashed?'5,4':''}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+  function dots(data, clr) {
+    return data.map((v,i) => `<circle cx="${xPos(i).toFixed(1)}" cy="${yScale(v).toFixed(1)}" r="3.5" fill="${clr}" stroke="white" stroke-width="1.5"/>`).join('');
+  }
+  function yTicks() {
+    const ticks = 4;
+    return Array.from({length:ticks+1}, (_,i) => {
+      const v = minV + (maxV - minV) * (i/ticks);
+      const y = yScale(v).toFixed(1);
+      return `<line x1="${pad.left}" x2="${W-pad.right}" y1="${y}" y2="${y}" stroke="#e5e5e5" stroke-width="1"/>
+              <text x="${pad.left-6}" y="${+y+4}" text-anchor="end" fill="#aaa" font-size="9" font-family="Sora">${(v/1000000).toFixed(2)}M</text>`;
+    }).join('');
+  }
+  function xLabels() {
+    return DATA.meses.map((m,i) => `<text x="${xPos(i).toFixed(1)}" y="${H-8}" text-anchor="middle" fill="#aaa" font-size="9" font-family="Sora">${m}</text>`).join('');
+  }
+
+  svg.innerHTML = `
+    ${yTicks()}
+    ${xLabels()}
+    ${pathLine(DATA.cesvi, '#555555', true)}
+    ${pathLine(DATA.segunda, '#aaaaaa', true)}
+    ${pathLine(vals, '#C8102E')}
+    ${dots(vals, '#C8102E')}
+    <rect x="${pad.left}" y="4" width="10" height="4" fill="#C8102E" rx="1"/>
+    <text x="${pad.left+14}" y="10" fill="#333" font-size="9" font-family="Sora">${sel==='GRUPO'?'Grupo':sel}</text>
+    <line x1="${pad.left+70}" y1="6" x2="${pad.left+80}" y2="6" stroke="#555" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="${pad.left+84}" y="10" fill="#777" font-size="9" font-family="Sora">CESVI</text>
+    <line x1="${pad.left+120}" y1="6" x2="${pad.left+130}" y2="6" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="${pad.left+134}" y="10" fill="#aaa" font-size="9" font-family="Sora">La Segunda</text>
+  `;
+}
+
+function renderPericiasChart(sel) {
+  const svg = document.getElementById('periciasChart');
+  const W = 900, H = 240;
+  const pad = { top: 30, right: 20, bottom: 50, left: 50 };
+  const n = DATA.tasadores.length;
+  const groupW = (W - pad.left - pad.right) / n;
+  const barW = groupW * 0.3;
+  const gap = groupW * 0.06;
+  const maxVal = Math.max(...DATA.tasadores.map(t => t.infat));
+  const yScale = v => H - pad.bottom - (v / (maxVal * 1.1)) * (H - pad.top - pad.bottom);
+  const barH   = v => (v / (maxVal * 1.1)) * (H - pad.top - pad.bottom);
+  const isGrupo = sel === 'GRUPO';
+
+  function yTicks() {
+    return Array.from({length:5}, (_,i) => {
+      const v = Math.round(maxVal * 1.1 * i / 4);
+      const y = yScale(v).toFixed(1);
+      return `<line x1="${pad.left}" x2="${W-pad.right}" y1="${y}" y2="${y}" stroke="#eeeeee" stroke-width="1"/>
+              <text x="${pad.left-6}" y="${+y+4}" text-anchor="end" fill="#bbb" font-size="9" font-family="Sora">${v}</text>`;
+    }).join('');
+  }
+
+  const bars = DATA.tasadores.map((t, i) => {
+    const cx     = pad.left + i * groupW + groupW / 2;
+    const isActive = t.n === sel;
+    const show   = isGrupo || isActive;
+    const xAseg  = cx - barW - gap / 2;
+    const xAt    = cx + gap / 2;
+
+    // Colores suaves: rosa/rojo tenue para Asegurados, gris medio para A+T
+    const colorAseg  = show ? '#d9535f' : '#e8e8e8';
+    const colorAt    = show ? '#999999' : '#dedede';
+    const colorLabel = show ? '#666666' : '#cccccc';
+    const valColor   = show ? '#888'    : '#ddd';
+
+    return `
+      <rect x="${xAseg.toFixed(1)}" y="${yScale(t.cant).toFixed(1)}" width="${barW.toFixed(1)}" height="${barH(t.cant).toFixed(1)}"
+        fill="${colorAseg}" rx="2" opacity="${show ? '0.85' : '0.5'}"/>
+      <text x="${(xAseg+barW/2).toFixed(1)}" y="${(yScale(t.cant)-4).toFixed(1)}" text-anchor="middle"
+        fill="${colorAseg}" font-size="9" font-weight="${show?600:400}" font-family="Sora" opacity="${show?1:0.5}">${t.cant}</text>
+      <rect x="${xAt.toFixed(1)}" y="${yScale(t.infat).toFixed(1)}" width="${barW.toFixed(1)}" height="${barH(t.infat).toFixed(1)}"
+        fill="${colorAt}" rx="2" opacity="${show ? '0.85' : '0.5'}"/>
+      <text x="${(xAt+barW/2).toFixed(1)}" y="${(yScale(t.infat)-4).toFixed(1)}" text-anchor="middle"
+        fill="${colorAt}" font-size="9" font-weight="${show?600:400}" font-family="Sora" opacity="${show?1:0.5}">${t.infat}</text>
+      <text x="${cx.toFixed(1)}" y="${(H-pad.bottom+14).toFixed(1)}" text-anchor="middle"
+        fill="${colorLabel}" font-size="9.5" font-weight="${show?600:400}" font-family="Sora" opacity="${show?1:0.5}">
+        ${t.n}
+      </text>`;
+  }).join('');
+
+  const legend = `
+    <rect x="${pad.left}" y="8" width="11" height="9" fill="#d9535f" rx="2" opacity="0.85"/>
+    <text x="${pad.left+15}" y="17" fill="#888" font-size="9" font-family="Sora">Asegurados</text>
+    <rect x="${pad.left+100}" y="8" width="11" height="9" fill="#999999" rx="2" opacity="0.85"/>
+    <text x="${pad.left+115}" y="17" fill="#888" font-size="9" font-family="Sora">A+T (Aseg. + Terceros)</text>
+  `;
+
+  svg.innerHTML = yTicks() + bars + legend;
+}
+
+
+function renderGroupSummary(cant, infat, sel) {
+  const el = document.getElementById('groupSummary');
+  const groupCant  = DATA.tasadores.reduce((a,x)=>a+x.cant,0);
+  const groupInfat = DATA.tasadores.reduce((a,x)=>a+x.infat,0);
+  const ok         = DATA.tasadores.filter(t => Math.abs(t.pctCesvi) <= t.meta).length;
+  const no         = DATA.tasadores.length - ok;
+  const desvGrupo  = (DATA.grupo[7]-DATA.cesvi[7])/DATA.cesvi[7];
+
+  const rows = [
+    { icon: '📋', label: 'Total pericias del período',  val: groupCant.toLocaleString('es-AR'),      color: '#111' },
+    { icon: '📄', label: 'Total informes A+T',           val: groupInfat.toLocaleString('es-AR'),     color: '#111' },
+    { icon: '✅', label: 'Tasadores dentro de meta',     val: `${ok} de ${DATA.tasadores.length}`,   color: '#1a7c3e' },
+    { icon: '❌', label: 'Tasadores fuera de meta',      val: `${no} de ${DATA.tasadores.length}`,   color: no > 0 ? '#C8102E' : '#1a7c3e' },
+    { icon: '📊', label: 'CM del Grupo — Feb. 2026',    val: '$ ' + Math.round(DATA.grupo[7]).toLocaleString('es-AR'), color: '#C8102E' },
+    { icon: '📈', label: 'CM CESVI — Feb. 2026',        val: '$ ' + Math.round(DATA.cesvi[7]).toLocaleString('es-AR'), color: '#111' },
+    { icon: '📉', label: 'Desvío Grupo vs CESVI',       val: (desvGrupo >= 0 ? '+' : '') + (desvGrupo*100).toFixed(1) + '%', color: desvGrupo <= 0 ? '#1a7c3e' : '#C8102E' },
+  ];
+
+  el.innerHTML = rows.map((r, i) => `
+    <div style="
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:11px 16px;
+      ${i < rows.length - 1 ? 'border-bottom:1px solid #f0f0f0;' : ''}
+      gap:12px;
+    ">
+      <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+        <span style="font-size:14px;flex-shrink:0;">${r.icon}</span>
+        <span style="font-size:12px;font-weight:500;color:#555;white-space:nowrap;">${r.label}</span>
+      </div>
+      <span style="font-size:15px;font-weight:800;color:${r.color};flex-shrink:0;text-align:right;">${r.val}</span>
+    </div>
+  `).join('');
+}
+
+function calcProb(t) {
+  const mesesDatos = 8;
+  const mesTotales = 12;
+  const mesesRest  = mesTotales - mesesDatos;
+  const desvios    = t.vals.map((v, i) => (v - DATA.cesvi[i]) / DATA.cesvi[i]);
+  const desvActual = desvios[7];
+  const n    = desvios.length;
+  const sumX = n * (n - 1) / 2;
+  const sumX2 = (n - 1) * n * (2 * n - 1) / 6;
+  const sumY  = desvios.reduce((a, b) => a + b, 0);
+  const sumXY = desvios.reduce((acc, v, i) => acc + i * v, 0);
+  const pendiente = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+  let desvTotalProy = desvios.reduce((a, b) => a + b, 0);
+  for (let m = 0; m < mesesRest; m++) { desvTotalProy += desvActual + pendiente * (m + 1); }
+  const desvFinalProm   = desvTotalProy / mesTotales;
+  const meta            = t.meta;
+  const margen          = meta - Math.abs(desvFinalProm);
+  const bonusTendencia  = pendiente < 0 ? Math.min(0.35, Math.abs(pendiente) * 10) : Math.max(-0.10, pendiente * -4);
+  const bonusCercania   = desvActual < meta * 1.5 ? 0.18 : desvActual < meta * 2.0 ? 0.08 : 0;
+  const scoreFinal      = (margen / (meta + 0.001)) * 0.55 + bonusTendencia + bonusCercania + 0.20;
+  const prob            = 1 / (1 + Math.exp(-(scoreFinal * 8 + 0.8)));
+  return Math.max(5, Math.min(96, Math.round(prob * 100)));
+}
+
+function renderProyeccion(sel) {
+  const el = document.getElementById('proyeccionChart');
+  const mesesDatos  = 8;   // Jul–Feb disponibles
+  const mesTotales  = 12;  // Jul 2025 – Jun 2026
+  const mesesRest   = mesTotales - mesesDatos; // 4 meses restantes
+
+  const tasadoresConProb = DATA.tasadores
+    .map(t => ({ ...t, prob: calcProb(t) }))
+    .sort((a, b) => b.prob - a.prob);
+
+  const labelW = 110;
+  const numW   = 46;
+  const isGrupo = sel === 'GRUPO';
+
+  el.innerHTML = `
+    <div style="padding:4px 0 2px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:0 2px;">
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--gray-300);width:${labelW}px;flex-shrink:0;">Tasador</span>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--gray-300);flex:1;">Proyección cierre Jun 2026</span>
+        <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--gray-300);width:${numW}px;text-align:right;flex-shrink:0;">Prob.</span>
+      </div>
+      ${tasadoresConProb.map(t => {
+        const isActive  = t.n === sel;
+        const highlight = isGrupo || isActive;
+        const opacity   = highlight ? 1 : 0.28;
+
+        // Semáforo con 4 zonas
+        const barColor = t.prob >= 50 ? '#1a7c3e'
+                       : t.prob >= 30 ? '#e67e22'
+                       : t.prob >= 11 ? '#C8102E'
+                       : '#7a0a1c';
+        const numColor = t.prob >= 50 ? '#1a7c3e'
+                       : t.prob >= 30 ? '#c0651a'
+                       : '#C8102E';
+        const etiqueta = t.prob >= 50 ? '✔ En camino'
+                       : t.prob >= 30 ? '⚠ En riesgo'
+                       : t.prob >= 11 ? '✘ Difícil'
+                       : '✘✘ Muy difícil';
+        const etqColor = '#fff';
+        const showLabel = t.prob > 18;
+
+        return `
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;opacity:${opacity};">
+            <span style="font-size:11px;font-weight:700;color:var(--black);width:${labelW}px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t.n}</span>
+            <div style="flex:1;background:#eeeeee;border-radius:4px;height:22px;overflow:hidden;position:relative;">
+              <div style="position:absolute;top:0;left:0;height:100%;width:${t.prob}%;background:${barColor};border-radius:4px 0 0 4px;transition:width 0.5s ease;"></div>
+              <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;padding-left:10px;">
+                ${showLabel ? `<span style="font-size:9px;font-weight:700;color:${etqColor};">${etiqueta}</span>` : `<span style="font-size:9px;font-weight:700;color:#aaa;padding-left:${t.prob+2}%;">${etiqueta}</span>`}
+              </div>
+            </div>
+            <span style="font-size:13px;font-weight:800;color:${highlight ? numColor : 'var(--gray-300)'};width:${numW}px;text-align:right;flex-shrink:0;">${t.prob}%</span>
+          </div>`;
+      }).join('')}
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);display:flex;gap:14px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:5px;font-size:9.5px;color:var(--gray-500);">
+          <div style="width:10px;height:10px;border-radius:2px;background:#1a7c3e;flex-shrink:0;"></div>≥ 50% — En camino
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:9.5px;color:var(--gray-500);">
+          <div style="width:10px;height:10px;border-radius:2px;background:#e67e22;flex-shrink:0;"></div>30–49% — En riesgo
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:9.5px;color:var(--gray-500);">
+          <div style="width:10px;height:10px;border-radius:2px;background:#C8102E;flex-shrink:0;"></div>11–29% — Difícil
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:9.5px;color:var(--gray-500);">
+          <div style="width:10px;height:10px;border-radius:2px;background:#7a0a1c;flex-shrink:0;"></div>< 10% — Muy difícil
+        </div>
+      </div>
+      <div style="margin-top:10px;padding:8px 10px;background:#f9f9f9;border-radius:4px;border-left:3px solid #ddd;">
+        <p style="font-size:9px;color:#999;line-height:1.6;margin:0;">
+          <strong style="color:#bbb;">¿Cómo se calcula?</strong> — Estima la probabilidad de cumplir la meta anual al cierre de Junio 2026 analizando la evolución mensual del Costo Medio de cada tasador relativo al CESVI. Considera la tendencia de los últimos 8 meses (Jul–Feb) y proyecta los 4 restantes (Mar–Jun). A mayor mejora sostenida del desvío vs CESVI y mayor margen respecto a la meta individual, mayor probabilidad.
+        </p>
+      </div>
+    </div>`;
+}
+
+function renderStandings(sel) {
+  const cesviFeb = DATA.cesvi[7];
+
+  function rowPos(i) {
+    const lib = i < 2;
+    return `<td class="c-pos">
+      <span class="pos-badge ${lib ? 'p-green' : 'p-gray'}">${i + 1}</span>
+    </td>`;
+  }
+
+  function rowName(t, i) {
+    const lib = i < 2;
+    const nombre = t.n.toUpperCase();
+    const active = t.n === sel ? 'text-decoration:underline;text-underline-offset:3px;' : '';
+    return `<td class="c-name">
+      <div class="name-wrap">
+        <span style="${active}">${nombre}</span>
+        ${lib ? '<span class="trophy">🏆</span>' : ''}
+      </div>
+    </td>`;
+  }
+
+  function sepRow(label) {
+    return `<tr class="prm-sep-row"><td colspan="5">${label}</td></tr>`;
+  }
+
+  /* ── TABLA 1: Costo Medio ascendente ── */
+  const byCM = [...DATA.tasadores]
+    .map(t => ({ ...t, cm: t.vals[7] }))
+    .sort((a, b) => a.cm - b.cm);
+
+  document.getElementById('standingsCM').innerHTML = byCM.map((t, i) => {
+    const desvPct = (t.cm - cesviFeb) / cesviFeb;
+    const desvStr = (desvPct >= 0 ? '+' : '') + (desvPct * 100).toFixed(1) + '%';
+    const cmStr   = '$ ' + Math.round(t.cm).toLocaleString('es-AR');
+    const vd = desvPct <= 0 ? 'v-pos' : 'v-neg';
+    return `<tr class="${i < 2 ? 'row-lib' : 'row-dark'}">
+      ${rowPos(i)}
+      ${rowName(t, i)}
+      <td class="c-pts">${cmStr}</td>
+      <td class="c-stat ${vd}">${desvStr}</td>
+      <td class="c-stat v-neu">${t.cant}</td>
+    </tr>
+    ${i === 1 ? sepRow('Sin clasificación') : ''}`;
+  }).join('');
+
+  /* ── TABLA 2: Cumplimiento Meta ── */
+  const byMeta = [...DATA.tasadores]
+    .map(t => ({ ...t, diff: t.pctCesvi - t.meta }))
+    .sort((a, b) => a.diff - b.diff);
+
+  document.getElementById('standingsMeta').innerHTML = byMeta.map((t, i) => {
+    const cumple  = t.diff <= 0;
+    const desvStr = (t.pctCesvi >= 0 ? '+' : '') + (t.pctCesvi * 100).toFixed(1) + '%';
+    const metaStr = (t.meta * 100).toFixed(0) + '%';
+    const diffStr = (t.diff >= 0 ? '+' : '') + (t.diff * 100).toFixed(1) + '%';
+    const vd = Math.abs(t.pctCesvi) <= t.meta ? 'v-pos' : 'v-neg';
+    const vdiff = cumple ? 'v-pos' : 'v-neg';
+    return `<tr class="${i < 2 ? 'row-lib' : 'row-dark'}">
+      ${rowPos(i)}
+      ${rowName(t, i)}
+      <td class="c-pts ${vdiff}">${diffStr}</td>
+      <td class="c-stat v-neu">${desvStr}</td>
+      <td class="c-stat v-neu">${metaStr}</td>
+    </tr>
+    ${i === 1 ? sepRow('Sin clasificación') : ''}`;
+  }).join('');
+}
+
+// Init
+updateDashboard();
+</script>
+</body>
+</html>
